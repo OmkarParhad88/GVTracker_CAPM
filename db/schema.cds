@@ -39,17 +39,17 @@ entity GiftVoucher : cuid
     material : Integer not null default 1000013157;
     storageLoc : String(4) not null default 'CSE1';
     quantity : Integer not null default 1;
-    batch : Integer not null default 080126001;
+    batch : Integer  default 080126001;
     descr : String(100) default 'GV-UNLIMITED-1000';
     price : Decimal(15,2) not null default 1000.00;
     brand : String(100) default 'UNLIMITED';
-    gifted : Boolean not null default false;
-    expDate : Date not null default current_date();
+    gifted : Boolean default false;
+    expDate : Date default $now ;
     type : Association to one GiftTypes default 'GV'
         @mandatory;
-    shoppingMall : Association to one ShoppingMall;
-    gVHeader : Association to one GVHeader;
-    // gVHeader : Association to one GVHeader on gVHeader.gv_no = $self.gVHeader.gv_no;
+    shoppingMall : Association to one ShoppingMall default 8208;
+    // gVHeader : Association to one GVHeader;
+    gVHeader : Association to one GVHeader on gVHeader.gv_no = $self.gVHeader.gv_no;
 }
 
 entity Bill : cuid
