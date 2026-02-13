@@ -1,7 +1,7 @@
-GET http://localhost:4004/service/GV_trackerService/CustomerSet
+GET http://localhost:4004/odata/v4/gv-tracker/CustomerSet
 
 ### Create a New Customer
-POST http://localhost:4004/service/GV_trackerService/CustomerSet
+POST http://localhost:4004/odata/v4/gv-tracker/CustomerSet
 Content-Type: application/json
 
 {
@@ -12,4 +12,42 @@ Content-Type: application/json
     "salutation_code" : "MR",
     "phoneCode" : 91,
     "shoppingMall_plant": 8208
+}
+
+
+###
+GET http://localhost:4004/odata/v4/gv-tracker/GiftVoucherSet?$expand= assignGiftVouchers
+###
+GET http://localhost:4004/odata/v4/gv-tracker/GVHeaderSet?$expand=customer, bills, giftVouchers,campaign
+
+### Create a New Gift Voucher
+POST http://localhost:4004/odata/v4/gv-tracker/GVHeaderSet
+Content-Type: application/json
+
+{
+    "gv_no": 10000004,
+    "total_gift_amout": 2000.00,
+    "campaign": "VALENTINE SALES 2025",
+    "comment": "",
+    "shoppingMall_plant": 8208,
+    "customer": "omkarparhad88pro@gmail.com",
+    "employee": 102312,
+    "gr_type_code":"CI",
+    "bills": [
+        {
+          "no": "Bjjuu3",
+          "sr_no": 1,
+          "amount": 2000,
+          "doc_name": "testr.pdf",
+          "base64": "ydfghjuytredhjuytrdjiuytredfghuytrd",
+          "mime_type_code": "PDF"
+        }
+    ],
+    "giftVouchers": [
+        {
+         "quantity": 1, 
+         "total_amount" : 2000.00,
+         "giftVoucher_coupon" : "080126UNL5H016"
+        }
+    ]
 }
