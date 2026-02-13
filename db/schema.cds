@@ -1,105 +1,145 @@
 namespace GV_tracker;
 
-using {cuid} from '@sap/cds/common';
+using { sap.common.CodeList } from '@sap/cds/common';
 
-entity Customer : cuid {
-    key email         : String(100);
-        name          : String(100) not null;
-        phone         : Integer not null;
-        phoneCode     : Integer not null default 91;
-        salutation    : Salutation(4) not null default #MR;
-        plant         : Integer not null;
-        type          : CustType(30) not null default #MALL;
-        shoppingMalls : Association to many ShoppingMall
-                            on shoppingMalls.customer = $self;
+using { cuid } from '@sap/cds/common';
+
+entity Customer : cuid
+{
+    key email : String(100);
+    name : String(100) not null;
+    phone : Integer not null;
+    phoneCode : Integer not null default 91;
+    salutation : Association to one Salutations default 'MR'
+        @mandatory;
+    type : Association to one CustTypes default 'Mall'
+        @mandatory;
+    shoppingMall : Association to one ShoppingMall; 
 }
 
-entity Employee : cuid {
-    key code        : Integer;
-        name        : String(100) not null;
-        designation : String(100);
-        plant       : Association to one ShoppingMall
-                          on plant.employee = $self;
+entity Employee : cuid
+{
+    key code : Integer;
+    name : String(100) not null;
+    designation : String(100);
+    shoppingMall : Association to one ShoppingMall;
 }
 
-entity ShoppingMall {
-    key plant      : Integer;
-        plant_name : String(100) not null;
-        customer   : Association to one Customer;
-        employee   : Association to one Employee;
+entity ShoppingMall
+{
+    key plant : Integer;
+    plant_name : String(100) not null;
+    customers : Association to many Customer on customers.shoppingMall = $self;
+    employees : Association to many Employee on employees.shoppingMall = $self;
 }
 
-entity GiftVoucher : cuid {
-    key coupon     : String(14);
-        material   : Integer not null;
-        plant      : Integer not null;
-        storageLoc : String(4) not null default 'CSE1';
-        quantity   : Integer not null default 1;
-        batch      : Integer not null;
-        descr      : String(100);
-        price      : Decimal(15, 2) not null;
-        brand      : String(100);
-        expDate    : DateTime not null;
-        type       : GiftType(100) not null;
-        gVHeader   : Association to one GVHeader;
-        gifted     : Boolean not null;
+entity GiftVoucher : cuid
+{
+    key coupon : String(14);
+    material : Integer not null default 1000013157;
+    storageLoc : String(4) not null default 'CSE1';
+    quantity : Integer not null default 1;
+    batch : Integer not null default 080126001;
+    descr : String(100) default 'GV-UNLIMITED-1000';
+    price : Decimal(15,2) not null default 1000.00;
+    brand : String(100) default 'UNLIMITED';
+    gifted : Boolean not null default false;
+    expDate : Date not null default current_date();
+    type : Association to one GiftTypes default 'GV'
+        @mandatory;
+    shoppingMall : Association to one ShoppingMall;
+    gVHeader : Association to one GVHeader;
+    // gVHeader : Association to one GVHeader on gVHeader.gv_no = $self.gVHeader.gv_no;
 }
 
-entity Bill : cuid {
-    sr_no     : Integer not null;
-    no        : String(100) not null;
-    amount    : Decimal(15, 2) not null;
-    doc_name  : String(100);
-    mime_type : fileType(100) not null;
-    base64    : LargeString;
-    gVHeader  : Association to one GVHeader;
+entity Bill : cuid
+{
+    sr_no : Integer not null;
+    no : String(100) not null;
+    amount : Decimal(15,2) not null;
+    doc_name : String(100);
+    base64 : LargeString;
+    mime_type : Association to one fileTypes
+        @mandatory;
+    gVHeader : Association to one GVHeader;
 }
 
-entity MallCampaign : cuid {
+entity MallCampaign : cuid
+{
     key campaign : String(100);
 }
 
-entity GVHeader : cuid {
-        @Core.Computed
-    key gv_no            : Integer64;
-        gr_type          : GVRType(100) not null;
-        total_gift_amout : Decimal(15, 2) not null;
-        campaign         : String(100) not null;
-        comment          : String(200);
-        plant            : Integer not null;
-        customer         : Association to one Customer;
-        employee         : Association to one Employee;
-        giftVouchers     : Association to many GiftVoucher
-                               on giftVouchers.gVHeader = $self;
-        bills            : Composition of many Bill
-                               on bills.gVHeader = $self;
+entity GVHeader : cuid
+{
+    key gv_no : Integer64
+        @Core.Computed;
+    total_gift_amout : Decimal(15,2) not null;
+    campaign : String(100) not null;
+    comment : String(200);
+    plant : Integer not null;
+    bills : Composition of many Bill on bills.gVHeader = $self;
+    gr_type : Association to one GVRTypes default 'CI'
+        @mandatory;
+    customer : Association to one Customer;
+    employee : Association to one Employee;
+    giftVouchers : Association to many GiftVoucher on giftVouchers.gVHeader = $self;
 }
 
-type CustType   : String enum {
+entity CustTypes : CodeList
+{
+    key code : CustType;
+}
+
+entity GVRTypes : CodeList
+{
+    key code : GVRType;
+}
+
+entity GiftTypes : CodeList
+{
+    key code : GiftType;
+}
+
+entity Salutations : CodeList
+{
+    key code : Salutation;
+}
+
+entity fileTypes : CodeList
+{
+    key code : fileType;
+}
+
+type CustType : String(20) enum
+{
     MALL = 'Mall Customer';
     INT = 'Internal Employee';
     EXT = 'Contract Employee';
 }
 
-type GVRType    : String enum {
+type GVRType : String(2) enum
+{
     CI;
     RP;
     RT;
 }
 
-type GiftType   : String enum {
+type GiftType : String(2) enum
+{
     GF;
     GV;
 }
 
-type Salutation : String enum {
+type Salutation : String(4) enum
+{
     MR = 'Mr';
     MRS = 'Mrs';
     MISS = 'Miss';
     MAST = 'Mast';
 }
 
-type fileType   : String enum {
+type fileType : String enum
+{
     JPEG = 'image/jpeg';
     PNG = 'image/png';
     JPG = 'image/jpg';

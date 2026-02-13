@@ -1,0 +1,15 @@
+GET http://localhost:4004/service/GV_trackerService/CustomerSet
+
+### Create a New Customer
+POST http://localhost:4004/service/GV_trackerService/CustomerSet
+Content-Type: application/json
+
+{
+    "name": "omi2",
+    "email": "omi2@example.com",
+    "phone" : 9552091741,
+    "type_code": "Mall",
+    "salutation_code" : "MR",
+    "phoneCode" : 91,
+    "shoppingMall_plant": 8208
+}

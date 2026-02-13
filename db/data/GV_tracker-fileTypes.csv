@@ -1,0 +1,8 @@
+code;name
+JPEG;image/jpeg
+PNG;image/png
+JPG;image/jpg
+DOC;application/vnd.openxmlformats-officedocument.wordprocessingml.document
+EXCEL;application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+PDF;application/pdf
+EMAIL;message/rfc822
