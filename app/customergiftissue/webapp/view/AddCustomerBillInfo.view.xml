@@ -1,0 +1,281 @@
+<mvc:View
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:l="sap.ui.layout"
+    controllerName="customergiftissue.controller.AddCustomerBillInfo"
+    xmlns:unified="sap.ui.unified"
+    displayBlock="true"
+    xmlns:core="sap.ui.core"
+    xmlns:table="sap.ui.table"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+>
+    <Page>
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <Title
+                        text="{path: 'zFilterModel>/isVerified', formatter: '.onFormatTitle'}"
+                    />
+                </contentLeft>
+            </Bar>
+        </customHeader>
+
+        <content>
+            <f:Form editable="true">
+                <f:layout>
+                    <f:ResponsiveGridLayout
+                        labelSpanXL="4"
+                        labelSpanL="4"
+                        labelSpanM="4"
+                        labelSpanS="12"
+                        adjustLabelSpan="false"
+                        emptySpanXL="0"
+                        emptySpanL="0"
+                        emptySpanM="0"
+                        emptySpanS="0"
+                        columnsXL="2"
+                        columnsL="2"
+                        columnsM="1"
+                        singleContainerFullSize="false"
+                    />
+                </f:layout>
+
+                <f:formContainers>
+                    <f:FormContainer>
+                        <f:formElements>
+                            <f:FormElement label="{i18n>CustomerMobile}">
+                                <f:fields>
+                                    <Input
+                                        editable="false"
+                                        value="{zFilterModel>/Create/GvrCustMoblNo}"
+                                        id="sMobileno"
+                                    >
+                                        <layoutData>
+                                            <l:GridData span="L3 M4 S6" />
+                                        </layoutData>
+                                    </Input>
+                                </f:fields>
+                            </f:FormElement>
+                            <f:FormElement
+                                label="{i18n>TotalCustomerBillValue}"
+                            >
+                                <f:fields>
+                                    <Input
+                                        editable="false"
+                                        value="{zFilterModel>/TotalBillValue}"
+                                        id="Totalgiftitems"
+                                    >
+                                        <layoutData>
+                                            <l:GridData span="L3 M4 S6" />
+                                        </layoutData>
+                                    </Input>
+                                </f:fields>
+                            </f:FormElement>
+                        </f:formElements>
+                    </f:FormContainer>
+                </f:formContainers>
+            </f:Form>
+            <Table
+                id="id.table.billinfo"
+                growing="true"
+                growingScrollToLoad="true"
+                mode="MultiSelect"
+                selectionChange="onSelectionChange"
+                items="{zFilterModel>/CustBill}"
+            >
+                <headerToolbar>
+                    <Toolbar>
+                        <Title text="{i18n>CustomerPurchaseBillDetails}" />
+                        <ToolbarSpacer />
+                        <Button
+                            icon="sap-icon://add"
+                            type="Emphasized"
+                            press="onAddNewBillPress"
+                            id="id.addBil"
+                        />
+                        <Button
+                            icon="sap-icon://delete"
+                            type="Emphasized"
+                            press="onDeleteRow"
+                            enabled="false"
+                            id="deleteButton"
+                        />
+                    </Toolbar>
+                </headerToolbar>
+                <columns>
+                    <Column
+                        id="column0"
+                        width="10%"
+                        hAlign="Center"
+                    >
+                        <header>
+                            <Label
+                                text="{i18n>Sr.No}"
+                                id="label0"
+                            />
+                        </header>
+                    </Column>
+                    <Column
+                        id="column1"
+                        hAlign="Center"
+                    >
+                        <header>
+                            <Label
+                                text="Bill No"
+                                id="label1"
+                            />
+                        </header>
+                    </Column>
+                    <Column
+                        id="column2"
+                        hAlign="Center"
+                    >
+                        <header>
+                            <Label
+                                text="Bill Value"
+                                id="label2"
+                            />
+                        </header>
+                    </Column>
+                    <Column
+                        id="column3"
+                        hAlign="Center"
+                    >
+                        <header>
+                            <Label
+                                text="Take Photo"
+                                id="label3"
+                            />
+                        </header>
+                    </Column>
+                    <Column
+                        id="column4"
+                        hAlign="Center"
+                        vAlign="Middle"
+                    >
+                        <header>
+                            <Label
+                                text="Upload Photo"
+                                id="label4"
+                            />
+                        </header>
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <Text text="{zFilterModel>ZgvrCustBillSlNo}" />
+                            <Input
+                                value="{zFilterModel>ZgvrCustBillNo}"
+                                liveChange="onLiveChange"
+                                id="id.ZgvrCustBillNo"
+                                class="class.ZgvrCustBillNo"
+                            />
+                            <Input
+                                value="{zFilterModel>ZgvrCustBillAmt}"
+                                type="Number"
+                                change="onChange"
+                                id="id.ZgvrCustBillAmt"
+                                class="class.ZgvrCustBillAmt"
+                                liveChange="onLiveChange"
+                            />
+                            <Button
+                                press="onOpenDialog"
+                                text="Camera"
+                                enabled="false"
+                                id="id.Camera"
+                                class="class.Camera"
+                                width="auto"
+                            />
+
+                            <Button
+                                text="Upload File"
+                                press=".onUploadPress"
+                                id="id.uploadMen"
+                                enabled="false"
+                                class="fileUploaderClass"
+                            />
+
+                            <core:HTML
+                                content='&lt;div id="fileContainer"&gt;&lt;div&gt;'
+                            />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+
+            <VBox>
+                <Dialog
+                    id="imageDialog"
+                    title="Capture Image"
+                    beforeOpen="onBeforeDialogOpen"
+                >
+                    <content>
+                        <VBox alignItems="End">
+                            <core:HTML
+                                id="videoHtml"
+                                content="&lt;video id='videoFeed' autoplay='true'style='width: 100%; height: 100%;' &gt;&lt;/video&gt;"
+                            />
+                        </VBox>
+                    </content>
+                    <HBox
+                        justifyContent="End"
+                        id="image_dialog_box_button"
+                    >
+                        <Button
+                            type="Reject"
+                            text="Close"
+                            press="onCloseDialog"
+                        />
+                        <Button
+                            text="Front Camera"
+                            press="onFrontCam"
+                            class="image_dialog_box_button"
+                        />
+
+                        <Button
+                            text="Back Camera"
+                            press="onBackCam"
+                            class="image_dialog_box_button"
+                        />
+
+                        <Button
+                            text="Capture Photo"
+                            press="onCapturePhoto"
+                            class="image_dialog_box_button"
+                        />
+                    </HBox>
+                </Dialog>
+            </VBox>
+
+            <HBox
+                width="95%"
+                justifyContent="SpaceAround"
+                alignItems="Center"
+                id="id.imageContainer.HBox"
+                wrap="Wrap"
+            />
+        </content>
+        <footer>
+            <OverflowToolbar>
+                <ToolbarSpacer />
+                <Button
+                    type="Reject"
+                    text="{i18n>CANCEL}"
+                    press="oncancelPress"
+                    id="id.close"
+                />
+
+                <Button
+                    type="Accept"
+                    text="{i18n>SUBMIT}"
+                    id="submit"
+                    press="onSubmitFiles"
+                    class="customButton"
+                    enabled="false"
+                />
+            </OverflowToolbar>
+        </footer>
+    </Page>
+</mvc:View>

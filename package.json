@@ -23,16 +23,18 @@
     "@sap/dev-cap-tools": "^1.31.0",
     "@types/node": "^24.0.0",
     "tsx": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "cds-plugin-ui5": "^0.13.0"
   },
   "scripts": {
     "start": "cds-serve",
     "watch": "cds-tsx watch",
-    "hybrid":"cds watch --profile hybrid",
+    "hybrid": "cds watch --profile hybrid",
     "bind-hdi": "cds bind -2 hana-hdi:default",
     "start-local": "npm run generate-entry-point && npm run cds-watch",
     "generate-entry-point": "dev-cap-tools gen-entrypoint",
-    "cds-watch": "cds watch --open"
+    "cds-watch": "cds watch --open",
+    "watch-customergiftissue": "cds watch --open customergiftissue/index.html?sap-ui-xx-viewCache=false --livereload false"
   },
   "private": true,
   "cds": {
@@ -50,5 +52,8 @@
   "lcap": true,
   "imports": {
     "#cds-models/*": "./@cds-models/*/index.js"
-  }
+  },
+  "workspaces": [
+    "app/*"
+  ]
 }

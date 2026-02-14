@@ -1,0 +1,286 @@
+<mvc:View
+    controllerName="customergiftissue.controller.CustomerGiftIssueDisplay"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    displayBlock="true"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+>
+    <Page id="DisplayPage">
+        <customHeader>
+            <OverflowToolbar>
+                <Title text="{i18n>GiftIssueDisplayTitle}" />
+                <ToolbarSpacer />
+                <Button
+                    text="User Profile"
+                    press="onProfileButtonPress"
+                    ariaHasPopup="Dialog"
+                />
+            </OverflowToolbar>
+        </customHeader>
+
+        <SplitContainer
+            initialDetail="DetailPage"
+            initialMaster="MasterPage"
+        >
+            <detailPages>
+                <Page id="DetailsPage">
+                    <customHeader>
+                        <Bar>
+                            <contentLeft>
+                                <Title text="GVR Details" />
+                            </contentLeft>
+                            <contentRight>
+                                <Button
+                                    press="onNavBack"
+                                    text="{i18n>Close}"
+                                    tooltip="Back"
+                                />
+                            </contentRight>
+                        </Bar>
+                    </customHeader>
+
+                    <content>
+                        <f:Form>
+                            <f:layout>
+                                <f:ResponsiveGridLayout
+                                    labelSpanXL="4"
+                                    labelSpanL="4"
+                                    labelSpanM="4"
+                                    labelSpanS="12"
+                                    adjustLabelSpan="false"
+                                    emptySpanXL="0"
+                                    emptySpanL="0"
+                                    emptySpanM="0"
+                                    emptySpanS="0"
+                                    columnsXL="3"
+                                    columnsL="3"
+                                    columnsM="3"
+                                    singleContainerFullSize="false"
+                                />
+                            </f:layout>
+
+                            <f:formContainers>
+                                <f:FormContainer>
+                                    <f:formElements>
+                                        <f:FormElement label="{i18n>GVRNumber}">
+                                            <f:fields>
+                                                <Input
+                                                    value="{GvrNo}"
+                                                    id="GVRNumber"
+                                                    editable="false"
+                                                />
+                                            </f:fields>
+                                        </f:FormElement>
+                                        <f:FormElement
+                                            label="{i18n>ShoppingMall}"
+                                        >
+                                            <f:fields>
+                                                <Input
+                                                    id="ShoppingMall"
+                                                    value="{= ${Werks} + ' - ' + ${PlantName}}"
+                                                    editable="false"
+                                                />
+                                            </f:fields>
+                                        </f:FormElement>
+                                        <f:FormElement
+                                            label="{i18n>CustomerMobile}"
+                                        >
+                                            <f:fields>
+                                                <Input
+                                                    value="{GvrCustMoblNo}"
+                                                    id="CustomerMobile"
+                                                    editable="false"
+                                                />
+                                            </f:fields>
+                                        </f:FormElement>
+                                        <f:FormElement
+                                            label="{i18n>Totalgiftitemsvalue}"
+                                        >
+                                            <f:fields>
+                                                <Input
+                                                    value="{
+                                                        path: 'GvrTotlGiftValu', 
+                                                        type: 'sap.ui.model.type.Float', 
+                                                        formatOptions: { 
+                                                            minFractionDigits: 2, 
+                                                            maxFractionDigits: 2 ,
+                                                            groupingEnabled: false
+                                                        }
+                                                    }"
+                                                    id="Totalgiftitemsvalue"
+                                                    editable="false"
+                                                />
+                                            </f:fields>
+                                        </f:FormElement>
+                                    </f:formElements>
+                                </f:FormContainer>
+
+                                <!-- Second set of form elements (Middle Form) -->
+                                <f:FormContainer>
+                                    <f:formElements>
+                                        <f:FormElement
+                                            label="{i18n>CSEUserName}"
+                                        >
+                                            <f:fields>
+                                                <Input
+                                                    value="{GvrCseUsrNam}"
+                                                    id="CSEUserName"
+                                                    editable="false"
+                                                />
+                                            </f:fields>
+                                        </f:FormElement>
+                                        <f:FormElement
+                                            label="{i18n>CustomerType}"
+                                        >
+                                            <f:fields>
+                                                <Input
+                                                    value="{path:'GvrCustTyp',formatter:'.formatCustTyp'}"
+                                                    id="CustomerType"
+                                                    editable="false"
+                                                />
+                                            </f:fields>
+                                        </f:FormElement>
+                                    </f:formElements>
+                                </f:FormContainer>
+
+                                <!-- Third set of form elements (Right Form) -->
+                                <f:FormContainer>
+                                    <f:formElements>
+                                        <f:FormElement label="{i18n>GVRDate}">
+                                            <f:fields>
+                                                <Input
+                                                    value="{path:'GvrCrtdDat',formatter:'.formatDate'}"
+                                                    id="GVRDate"
+                                                    editable="false"
+                                                />
+                                            </f:fields>
+                                        </f:FormElement>
+                                        <f:FormElement
+                                            label="{i18n>Employee ID/Name}"
+                                        >
+                                            <f:fields>
+                                                <Input
+                                                    value="{GvrEmplyIdNam}"
+                                                    id="EmployeeName"
+                                                    editable="false"
+                                                />
+                                            </f:fields>
+                                        </f:FormElement>
+                                        <f:FormElement label="">
+                                            <f:fields>
+                                                <Button
+                                                    text="{i18n>ViewCustomerBillInfo}"
+                                                    press="onViewCustomerBillInfoPress"
+                                                />
+                                            </f:fields>
+                                        </f:FormElement>
+                                        <f:FormElement label="{i18n>Campaign}">
+                                            <f:fields>
+                                                <Input
+                                                    value="{GvrCampaign}"
+                                                    id="Campaign"
+                                                    editable="false"
+                                                />
+                                            </f:fields>
+                                        </f:FormElement>
+                                    </f:formElements>
+                                </f:FormContainer>
+                            </f:formContainers>
+                        </f:Form>
+
+                        <!-- Comments Field -->
+                        <Panel width="100%">
+                            <Text text="{i18n>Comments}:" />
+                            <Input
+                                value="{GvrCmt}"
+                                id="Comments"
+                                editable="false"
+                            />
+                        </Panel>
+
+                        <!-- Table to display the records of Gift Items -->
+                        <Table
+                            id="dgiftItemsTable"
+                            items="{GVRItemSet}"
+                        >
+                            <headerToolbar>
+                                <Toolbar>
+                                    <Title text="{i18n>IssueDisplayTable}" />
+                                </Toolbar>
+                            </headerToolbar>
+
+                            <columns>
+                                <Column>
+                                    <Text text="{i18n>MaterialCode}" />
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>MaterialName}" />
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>Value}" />
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>IssueQty}" />
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>GVCouponSL.No}" />
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>Brand}" />
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>ExpiryDate}" />
+                                </Column>
+                            </columns>
+
+                            <items>
+                                <ColumnListItem>
+                                    <cells>
+                                        <Text text="{Material}" />
+                                        <Text text="{MatDescription}" />
+                                        <Text text="{Value}" />
+                                        <Text text="{Quantity}" />
+                                        <Text text="{Coupon}" />
+                                        <Text text="{Brand}" />
+                                        <Text
+                                            text="{path:'Vfdat',formatter:'.formatDate'}"
+                                        />
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </content>
+                </Page>
+            </detailPages>
+            <masterPages>
+                <Page
+                    id="MasterPage"
+                    title="GVR Numbers"
+                >
+                    <SearchField
+                        id="gvrSearchField"
+                        placeholder="Search by GVR Number"
+                        liveChange="onSearchGVRList"
+                    />
+                    <List
+                        id="GVRNumberList"
+                        items="{/GVRHeaderSet}"
+                        mode="SingleSelectMaster"
+                        itemPress="onGVRNoPress"
+                        growing="true"
+                        growingScrollToLoad="true"
+                    >
+                        <items>
+                            <StandardListItem
+                                title="{GvrNo}"
+                                type="Navigation"
+                            />
+                        </items>
+                    </List>
+                </Page>
+            </masterPages>
+        </SplitContainer>
+    </Page>
+</mvc:View>

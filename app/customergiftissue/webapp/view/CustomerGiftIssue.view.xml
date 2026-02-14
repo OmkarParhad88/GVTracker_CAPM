@@ -1,0 +1,301 @@
+<mvc:View
+    controllerName="customergiftissue.controller.CustomerGiftIssue"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    displayBlock="true"
+    xmlns:mvc="sap.ui.core.mvc"
+    
+>
+    <Page>
+        <!-- header content -->
+        <customHeader>
+            <OverflowToolbar>
+                <Title text="{i18n>GiftIssueHomePageTitle}" />
+                <ToolbarSpacer />
+                <Button text="{i18n>GiftIssueUserProfile}" press="onProfileButtonPress" ariaHasPopup="Dialog" />
+            </OverflowToolbar>
+        </customHeader>
+
+        <content>
+            <!-- Form above the Table -->
+            <f:Form>
+                     <f:layout>
+                                <f:ResponsiveGridLayout
+                                    labelSpanXL="4"
+                                    labelSpanL="4"
+                                    labelSpanM="4"
+                                    labelSpanS="12"
+                                    adjustLabelSpan="false"
+                                    emptySpanXL="0"
+                                    emptySpanL="0"
+                                    emptySpanM="0"
+                                    emptySpanS="0"
+                                    columnsXL="3"
+                                    columnsL="3"
+                                    columnsM="3"
+                                    singleContainerFullSize="false"
+                                />
+                            </f:layout>
+                <f:formContainers> 
+                    <f:FormContainer>
+                        <f:formElements>
+                            <f:FormElement label="{i18n>ShoppingMall}">
+                                <f:fields>
+                                    <Input
+                                        id="shoppingMallInput" 
+                                        value="{zFilterModel>/PlantName}"
+                                        editable="false"  />
+                                </f:fields>
+                            </f:FormElement>
+                            <f:FormElement label="{i18n>CustomerType}">
+                                <f:fields>
+                                    <Select
+                                        id="customerTypeSelect"
+                                        selectedKey="{zFilterModel>/Create/GvrCustTyp}"
+                                        items="{path: '/CustTypeSet'}"
+                                        change="onCustomerTypeChange"
+                                        editable="{= !${zFilterModel>/isVerified}}" 
+                                        
+                                    >
+                                        <core:Item
+                                            text="{CustTypeDesc}"
+                                            key="{GvrCustType}"
+                                        />
+                                    </Select>
+                                </f:fields>
+                            </f:FormElement>
+                            <f:FormElement label="{i18n>CustomerMobile}">
+                                <f:fields>
+                                    <Input
+                                        id="customerMobileInput"
+                                        value="{zFilterModel>/Create/GvrCustMoblNo}"
+                                        showValueHelp="true"
+                                        valueHelpRequest="onVHRMobile"
+                                        showSuggestion="true"
+                                        autocomplete="false"
+                                        suggestionItems="{path: '/CustMobileSet'}"
+                                        suggestionItemSelected="onMobileSelected"
+                                        liveChange="onMobileNumChange"
+                                        required="true" 
+                                        maxLength="10" 
+                                        type="Tel"      
+                                       editable="{= !${zFilterModel>/isVerified} }"                                 
+                                    >
+                                        <SuggestionItem text="{MobileNo}" />
+                                    </Input>
+                                </f:fields>
+                            </f:FormElement>
+                            <f:FormElement label="{i18n>Campaign}">
+                                <f:fields>
+                                    <Input
+                                        value="{zFilterModel>/Create/GvrCampaign}"
+                                        showValueHelp="true"
+                                        valueHelpOnly="true"
+                                        editable="{= !${zFilterModel>/isVerified} }" 
+                                        valueHelpRequest="onVHRCampaign"
+                                        required="true" 
+                                    >
+                                        <SuggestionItem text="{Campaign}" />
+                                    </Input>
+                                </f:fields>
+                            </f:FormElement>
+                            <f:FormElement label="{i18n>Totalgiftitemsvalue}">
+                                <f:fields>
+                                    <Input
+                                        id="TotalGiftItemsValue"
+                                        value="{zFilterModel>/Create/GvrTotlGiftValu}"
+                                        editable="false"
+                                    />
+                                </f:fields>
+                            </f:FormElement>
+                        </f:formElements>
+                    </f:FormContainer>
+
+                    <!-- Second set of form elements(Middle Form) -->
+                    <f:FormContainer>
+                        <f:formElements>
+                            <f:FormElement label="{i18n>CSEUserName}">
+                                <f:fields>
+                                    <Input
+                                        id="CSEUserNameValue"
+                                        value="{zFilterModel>/Create/GvrCseUsrNam}"
+                                        required="true"
+                                        maxLength="20" 
+                                        liveChange="onKeyPressAlphabetOnly"  
+                                        editable="{= !${zFilterModel>/isVerified} }" 
+                                    />
+                                </f:fields>
+                            </f:FormElement>
+                            <f:FormElement label="{i18n>EmployeeIDName}"> 
+                                <f:fields>
+                                    <Input
+                                        id="employeeIdInput" 
+                                        value="{zFilterModel>/Create/GvrEmplyIdNam}"
+                                        maxLength="20" 
+                                        change="onCheckUser"
+                                        editable= "{= ${zFilterModel>/EmpField} }"
+                                    />
+                                </f:fields>
+                            </f:FormElement>
+                        </f:formElements>
+                    </f:FormContainer>
+
+                    <!-- Third set of form elements(Right Form) -->
+                    <f:FormContainer>
+                        <f:formElements>
+                            <f:FormElement label="{i18n>GVRDate}">
+                                <f:fields>
+                                    <Input
+                                        id="datePicker"
+                                        value="{zFilterModel>/TodaysDate}"
+                                        editable="false"
+                                    />
+                                </f:fields>
+                            </f:FormElement>
+                            <f:FormElement label="">
+                                <f:fields>
+                                    <Button
+                                        id="addCustomerProfileButton"
+                                        text="{i18n>AddCustomerProfile}"
+                                        press="onAddCustomerProfilePress"
+                                        enabled="{= ${zFilterModel>/Create/GvrCustMoblNo} === ''}"
+                                    />
+                                </f:fields>
+                            </f:FormElement>
+                            <f:FormElement label="">
+                                <f:fields>
+                                    <Button
+                                        text="{i18n>AddCustomerBillInfo}"
+                                        press="onAddCustomerBillInfoPress"
+                                        id="id.AddCustomerBillInfo"
+                                        enabled="{= ${zFilterModel>/Create/GvrCustMoblNo} !== ''}"
+                                    />
+                                </f:fields>
+                            </f:FormElement>
+                            <f:FormElement label="{i18n>CustomerOTP}">
+                                <f:fields>
+                                    <Input
+                                        id="CustomerOTP"
+                                        value="{zFilterModel>/Create/GvrCustOtp}"
+                                        maxLength="6"
+                                        required="true"
+                                        liveChange="onLiveChangeOTP" 
+                                        placeholder="Enter OTP"
+                                        enabled="{= ${zFilterModel>/Create/GvrCustMoblNo} !== ''}"
+                                    />
+                                    <Button
+                                        id="SendOTPButton"
+                                        text="{i18n>SendOTP}"
+                                        press="onSendOTP"
+                                        enabled="{= ${zFilterModel>/Create/GvrCustMoblNo} !== ''}"
+                                    />
+                                </f:fields>
+                            </f:FormElement>
+                            <f:FormElement label="">
+                                <f:fields>
+                                    <Button
+                                        id="verifyOTPButton"
+                                        text="{i18n>VerifyOTP}"
+                                        width="50%"
+                                        press="onVerifyOTP"
+                                        enabled="false"
+                                    />
+                                </f:fields>
+                            </f:FormElement>
+                        </f:formElements>
+                    </f:FormContainer>
+                </f:formContainers>
+            </f:Form>
+
+            <!-- Comments Field -->
+            <Panel width="100%">
+                <Text text="{i18n>Comments}:" />
+                <Input id="commentValue" value="{zFilterModel>/Create/GvrCmt}" />
+            </Panel>
+
+            <Table
+                id="giftItemsTable"
+                mode="MultiSelect"
+                items="{path:'/GiftItemSet'}"
+                selectionChange="onItemTableSelectionChange"
+            >
+                <headerToolbar>
+                    <Toolbar>
+                        <Title
+                            id="tableHeader1"
+                            text="{i18n>GiftIssueTableTitle}"
+                        />
+                        <ToolbarSpacer />
+                        <SearchField
+							width="20%"
+							change="onTableSearch"
+						/>
+                    </Toolbar>
+                </headerToolbar>
+
+                <columns>
+                    <Column>
+                        <Text text="{i18n>MaterialCode}" />
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>MaterialName}" />
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>StockQty}" />
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>Value}" />
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>IssueQty}" />
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>GVCouponSL.No}" />
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>Brand}" />
+                    </Column>
+                    <Column >
+                        <Text text="{i18n>ExpiryDate}" />
+                    </Column>
+                </columns>
+
+                <items>
+                    <ColumnListItem> 
+                        <cells>
+                            <Text text="{Material}" />
+                            <Text text="{MatDes}" />
+                            <Text text="{Quantity}" />
+                            <Text text="{MovAvgPrice}" />
+                            <Input
+                                value="{path: 'ExpDate', formatter: '.formatter.getDefaultQty'}"
+                                editable="{path:'ExpDate', formatter: '.formatter.isEditableForExpiry'}"
+                                liveChange=".onQtyLiveChange"
+                                valueLiveUpdate="true"
+                            />
+                            <Text text="{Coupon}" />
+                            <Text text="{Brand}" />
+                            <Text text="{path:'ExpDate',formatter:'.formatDate'}" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table> 
+
+        </content>
+        <footer>
+            <OverflowToolbar>
+               <ToolbarSpacer />
+                <Button
+                    text="{i18n>Cancel}"
+                    press="onCancel"
+                />
+                <Button
+                    text="{i18n>Submit}"
+                    press="onSubmitPress"
+                />
+            </OverflowToolbar>
+        </footer>
+    </Page>
+</mvc:View>

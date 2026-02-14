@@ -1,0 +1,65 @@
+/* Enter your custom styles here */
+.customClass {
+    margin-left: 2%;
+    margin-top: 2%;
+}
+
+.VBox {
+    margin-top: 2%;
+}
+
+.imageBox {
+    border: 2px solid black;
+    margin: 10px;
+}
+
+.OuterFlexBox {
+    margin-top: 20px;
+    /* Adjust this value for more or less space */
+}
+
+.customVBox {
+    padding: 0.5rem;
+    margin: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+customButton {
+    margin-left: 5%;
+}
+
+
+.imageDialog {
+    height: auto;
+    width: auto;
+}
+
+.customButtonClass {
+   padding-right: 1rem !important ; 
+}
+
+.customDialogContent {
+    padding: 1rem;
+}
+
+.customOpenImageDialog {
+    max-height: 100vh;
+    overflow: hidden;
+}
+
+.customImage {
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+}
+
+.boldText {
+    font-weight: bold;
+    font-size: 1rem;
+    color: #235be8;
+    padding: 0.2rem 0.6rem;
+}
+
+.myTextClass {
+    margin-left: 0.5rem;
+}

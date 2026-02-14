@@ -1,0 +1,147 @@
+<mvc:View
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:l="sap.ui.layout"
+    xmlns="sap.m"
+    controllerName="customergiftissue.controller.ViewCustomerBillInfo"
+    displayBlock="true"
+>
+    <Page>
+        <!-- Header Contend -->
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <Title text="{i18n>DisplayViewCustomerBillInfoTitle}" />
+                </contentLeft>
+            </Bar>
+        </customHeader>
+
+        <content>
+            <f:Form editable="true">
+                <f:layout>
+                    <f:ResponsiveGridLayout
+                        labelSpanXL="4"
+                        labelSpanL="4"
+                        labelSpanM="4"
+                        labelSpanS="12"
+                        adjustLabelSpan="false"
+                        emptySpanXL="0"
+                        emptySpanL="0"
+                        emptySpanM="0"
+                        emptySpanS="0"
+                        columnsXL="2"
+                        columnsL="2"
+                        columnsM="1"
+                        singleContainerFullSize="false"
+                    />
+                </f:layout>
+
+                <f:formContainers>
+                    <f:FormContainer>
+                        <f:formElements>
+                            <f:FormElement label="GVR Number">
+                                <f:fields>
+                                    <Input
+                                        editable="false"
+                                        id="id.input.Hdr.GVRNum"
+                                    >
+                                        <layoutData>
+                                            <l:GridData span="L3 M4 S6" />
+                                        </layoutData>
+                                    </Input>
+                                </f:fields>
+                            </f:FormElement>
+                            <f:FormElement label="{i18n>CustomerMobile}">
+                                <f:fields>
+                                    <Input
+                                        editable="false"
+                                        id="id.input.Hdr.MobNum"
+                                    >
+                                        <layoutData>
+                                            <l:GridData span="L3 M4 S6" />
+                                        </layoutData>
+                                    </Input>
+                                </f:fields>
+                            </f:FormElement>
+                            <f:FormElement
+                                label="{i18n>TotalCustomerBillValue}"
+                            >
+                                <f:fields>
+                                    <Input
+                                        editable="false"
+                                        id="id.totalAmount"
+                                    >
+                                        <layoutData>
+                                            <l:GridData span="L3 M4 S6" />
+                                        </layoutData>
+                                    </Input>
+                                </f:fields>
+                            </f:FormElement>
+                        </f:formElements>
+                    </f:FormContainer>
+                </f:formContainers>
+            </f:Form>
+
+            <Table
+                id="id.table.issue.viewBill"
+                growing="true"
+                growingScrollToLoad="true"
+                updateFinished="onUpdateTableFinished"
+                items="{path: '/CustBillSet' , 
+                        parameters: {'expand': 'ToAttach'},
+                        sorter: { path: 'Zzserialno' ,  descending: false } 
+                       }"
+            >
+                <headerToolbar>
+                    <Toolbar>
+                        <Title text="Customer Purchase Bill Details" />
+                    </Toolbar>
+                </headerToolbar>
+                <columns>
+                    <Column>
+                        <header>
+                            <Label text="{i18n>Sr.No}" />
+                        </header>
+                    </Column>
+                    <Column>
+                        <header>
+                            <Label text="{i18n>BillNo}" />
+                        </header>
+                    </Column>
+                    <Column>
+                        <header>
+                            <Label text="{i18n>BillValue}" />
+                        </header>
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem type="Active">
+                        <cells>
+                            <Text text="{Zzserialno}" />
+                            <Text text="{ZgvrCustBillNo}" />
+                            <Text text="{ZgvrCustBillAmt}" />
+                           
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+
+            <HBox
+                width="95%"
+                justifyContent="SpaceAround"
+                alignItems="Center"
+                id="id.image.VBox"
+                wrap="Wrap"
+            />
+        </content>
+        <footer>
+            <OverflowToolbar>
+                <ToolbarSpacer />
+                <Button
+                    text="{i18n>Back}"
+                    press="onBackPress"
+                />
+            </OverflowToolbar>
+        </footer>
+    </Page>
+</mvc:View>

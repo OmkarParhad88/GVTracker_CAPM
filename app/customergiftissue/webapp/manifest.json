@@ -1,0 +1,188 @@
+{
+  "_version": "1.81.0",
+  "sap.app": {
+    "id": "customergiftissue",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.20.2",
+      "toolsId": "f32f801e-3c21-4991-a26d-5ed50751d5e8"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/odata/v2/gv-tracker/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "2.0"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "fullWidth": true,
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": false,
+    "dependencies": {
+      "minUI5Version": "1.144.1",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "customergiftissue.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true,
+          "defaultBindingMode": "TwoWay",
+          "defaultCountMode": "Inline",
+          "useBatch": true
+        }
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "transition": "slide",
+        "type": "View",
+        "viewType": "XML",
+        "path": "customergiftissue.view",
+        "async": true
+      },
+      "routes": [
+        {
+          "name": "Home",
+          "pattern": "",
+          "target": [
+            "Home"
+          ]
+        },
+        {
+          "name": "CustomerGiftIssue",
+          "pattern": "GiftIssueCreate/:from:",
+          "target": [
+            "CustomerGiftIssue"
+          ]
+        },
+        {
+          "name": "CustomerGiftIssueDisplay",
+          "pattern": "GiftIssueDisplay/{gvrNumber}",
+          "target": [
+            "CustomerGiftIssueDisplay"
+          ]
+        },
+        {
+          "name": "AddCustomerProfile",
+          "pattern": "AddCustomerProfile",
+          "target": [
+            "AddCustomerProfile"
+          ]
+        },
+        {
+          "name": "AddCustomerBillInfo",
+          "pattern": "AddCustomerBillInfo/{Mobile}/{isVerified}",
+          "target": [
+            "AddCustomerBillInfo"
+          ]
+        },
+        {
+          "name": "ViewCustomerBillInfo",
+          "pattern": "ViewCustomerBillInfo/{gvrNumber}/{GvrCustMoblNo}",
+          "target": [
+            "ViewCustomerBillInfo"
+          ]
+        }
+      ],
+      "targets": {
+        "Home": {
+          "id": "Home",
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "name": "Home"
+        },
+        "CustomerGiftIssue": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "name": "CustomerGiftIssue"
+        },
+        "CustomerGiftIssueDisplay": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "name": "CustomerGiftIssueDisplay"
+        },
+        "AddCustomerProfile": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "name": "AddCustomerProfile"
+        },
+        "AddCustomerBillInfo": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "name": "AddCustomerBillInfo"
+        },
+        "ViewCustomerBillInfo": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "name": "ViewCustomerBillInfo"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "customergiftissue.view.App",
+      "type": "XML",
+      "id": "App",
+      "async": true
+    }
+  }
+}

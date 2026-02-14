@@ -1,0 +1,122 @@
+<mvc:View
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    controllerName="customergiftissue.controller.Home"
+>
+    <Page
+        id="HomePage"
+        title="{i18n>title}"
+    >
+        <!--Header Content -->
+        <customHeader>
+            <OverflowToolbar>
+                <Title text="{i18n>HomePageTitle}" />
+                <ToolbarSpacer />
+                <Button
+                    text="{i18n>UserProfile}"
+                    press="onProfileButtonPress"
+                    ariaHasPopup="Dialog"
+                />
+            </OverflowToolbar>
+        </customHeader>
+
+        <content>
+            <FlexBox
+                class="OuterFlexBox"
+                direction="Column"
+                alignItems="Center"
+                justifyContent="Start"
+                height="90%"
+                width="100%"
+            >
+                <FlexBox
+                    direction="Column"
+                    alignItems="Center"
+                    justifyContent="Center"
+                    width="50%"
+                >
+                    <!-- GVR Number and Execute Button -->
+                    <FlexBox
+                        direction="Row"
+                        justifyContent="SpaceBetween"
+                        alignItems="Center"
+                        width="70%"
+                        wrap="Wrap"
+                    >
+                        <Label
+                            text="{i18n>GVRNumber}"
+                            labelFor="gvrInput"
+                        />
+                        <Input
+                            id="gvrInput"
+                            showValueHelp="true"
+                            valueHelpRequest="onVHRGVRNumber"
+                            editable="false"
+                            maxLength="10"
+                            width="200px"
+                            liveChange="onLiveChange"
+                            type="Tel"
+                            showSuggestion="false"
+                            autocomplete="false"
+                        />
+                        <Button
+                            text="{i18n>EXECUTE}"
+                            id="id.execute"
+                            press="onExecute"
+                        />
+                    </FlexBox>
+
+                    <!-- Radio Button Group for CREATE and DISPLAY -->
+                    <FlexBox
+                        direction="Column"
+                        alignItems="Center"
+                        justifyContent="Center"
+                        width="50%"
+                    >
+                        <RadioButtonGroup
+                            id="radioGroup"
+                            columns="1"
+                        >
+                            <RadioButton
+                                id="createRadio"
+                                text="{i18n>CREATE}"
+                                selected="true"
+                                select="onRadioSelect"
+                            />
+                            <RadioButton
+                                id="displayRadio"
+                                text="{i18n>DISPLAY}"
+                                select="onRadioSelect"
+                            />
+                        </RadioButtonGroup>
+                    </FlexBox>
+                </FlexBox>
+            </FlexBox>
+        </content>
+    </Page>
+    <Popover
+        id="userProfilePopover"
+        placement="Bottom"
+        title="User Information"
+    >
+        <List items="{/ShoppingMallSet}">
+            <!-- Each List Item -->
+            <CustomListItem>
+                <VBox class="sapUiSmallMargin">
+                    <HBox>
+                        <Label text="Plant Code:" />
+                        <Text text="{Plant}" />
+                    </HBox>
+                    <HBox>
+                        <Label text="User ID:" />
+                        <Text text="{UserId}" />
+                    </HBox>
+                    <HBox>
+                        <Label text="User Name:" />
+                        <Text text="{UserName}" />
+                    </HBox>
+                </VBox>
+            </CustomListItem>
+        </List>
+    </Popover>
+</mvc:View>

@@ -1,0 +1,120 @@
+<mvc:View
+    controllerName="customergiftissue.controller.AddCustomerProfile"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    displayBlock="true"
+>
+    <Page>
+        <!-- Header ontent -->
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <Title text="{i18n>AddCustProfileTitle}" />
+                </contentLeft>
+            </Bar>
+        </customHeader>
+
+        <content>
+            <!-- Add Customer Profile Form -->
+            <f:Form editable="true">
+                <f:layout>
+                    <f:ResponsiveGridLayout
+                        labelSpanXL="4"
+                        labelSpanL="4"
+                        labelSpanM="4"
+                        labelSpanS="12"
+                        adjustLabelSpan="false"
+                        emptySpanXL="0"
+                        emptySpanL="0"
+                        emptySpanM="0"
+                        emptySpanS="0"
+                        columnsXL="2"
+                        columnsL="2"
+                        columnsM="2"
+                        singleContainerFullSize="false"
+                    />
+                </f:layout>
+                <f:formContainers>
+                    <f:FormContainer>
+                        <f:formElements>
+                            <f:FormElement label="{i18n>Cust.MobileNumber}">
+                                <f:fields>
+                                    <Input
+                                        id="mobileInput"
+                                        value="{zFilterModel>/AddCustomer/MobileNo}"
+                                        type="Tel"
+                                        maxLength="10"
+                                        required="true"
+                                        liveChange="onMobileNumChange"
+                                    />
+                                </f:fields>
+                            </f:FormElement>
+                            <f:FormElement label="{i18n>MobileCountryCode}">
+                                <f:fields>
+                                    <Input
+                                        id="countryCodeInput"
+                                        value="{zFilterModel>/AddCustomer/MobCont}"
+                                        showValueHelp="true"
+                                        valueHelpRequest="onVHRCountryCode"
+                                        showSuggestion="true"
+                                        suggestionItems="{path: '/MobCountryCodeSet'}"
+                                    >
+                                        <SuggestionItem text="{MobCont}" />
+                                    </Input>
+                                </f:fields>
+                            </f:FormElement>
+                            <f:FormElement label="{i18n>CustomerTitle}">
+                                <f:fields>
+                                    <Select
+                                        id="titleSelect"
+                                        items="{path: '/TitleSet'}"
+                                        selectedKey="{zFilterModel>/AddCustomer/Title}"
+                                    >
+                                        <core:Item
+                                            text="{TitleCode}"
+                                            key="{TitleDesc}"
+                                        />
+                                    </Select>
+                                </f:fields>
+                            </f:FormElement>
+                            <f:FormElement label="{i18n>CustomerName}">
+                                <f:fields>
+                                    <Input
+                                        id="nameInput"
+                                        value="{zFilterModel>/AddCustomer/CustName}"
+                                        type="Text"
+                                        required="true"
+                                    />
+                                </f:fields>
+                            </f:FormElement>
+                            <f:FormElement label="{i18n>CustomerEmail}">
+                                <f:fields>
+                                    <Input
+                                        id="emailInput"
+                                        value="{zFilterModel>/AddCustomer/CustEmail}"
+                                        liveChange=".onEmailInputChange"
+                                    />
+                                </f:fields>
+                            </f:FormElement>
+                            <f:FormElement label="">
+                                <f:fields>
+                                    <Button
+                                        text="{i18n>CANCEL}"
+                                        press="oncancel"
+                                    />
+                                    <Button
+                                        text="{i18n>ADDCUSTOMER}"
+                                        press="onAddCustomer"
+                                    />
+                                </f:fields>
+                            </f:FormElement>
+                        </f:formElements>
+                    </f:FormContainer>
+                </f:formContainers>
+            </f:Form>
+        </content>
+    </Page>
+</mvc:View>
