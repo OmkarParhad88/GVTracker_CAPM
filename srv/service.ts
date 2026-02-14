@@ -1,29 +1,21 @@
-// import cds from '@sap/cds';
+import cds, { Service, Request } from '@sap/cds';
 
-// class GV_trackerService extends LCAPApplicationService {
-//     async init() {
+export = cds.service.impl(async function (this: Service) {
+    this.before('CREATE', 'GVHeaderSet', async (req: Request) => {
+        const { assignGiftVouchers } = req.data;
 
-//         this.before('CREATE', 'CustomerSet', async (request) => {
-//             await customerset_Logic(request);
-//         });
+        if (assignGiftVouchers && Array.isArray(assignGiftVouchers)) {
+            for (const voucher of assignGiftVouchers) {
+                const quantity = voucher.quantity;
+                const giftVoucher_ID = voucher.giftVoucher_ID || (voucher.giftVoucher && voucher.giftVoucher.ID);
 
-//         return super.init();
-//     }
-// }
-
-
-// module.exports = {
-//     GV_trackerService
-// };
-
-
-// import cds, { Service, Request } from '@sap/cds'
-// import { Customer } from './code/customer'
-
-// export = cds.service.impl(function (this: Service) {
-//     const LOG = cds.log('gv_tracker')
-
-//     // this.before('CREATE', 'CustomerSet', async (request: Request) => {
-//     //     await Customer
-//     // });
-// })
+                if (quantity && giftVoucher_ID) {
+                    // Update the GiftVoucher quantity in the database
+                    await cds.update('GV_tracker.GiftVoucher')
+                        .set `quantity = quantity - ${quantity}`
+                        .where({ ID: giftVoucher_ID });
+                }
+            }
+        }
+    });
+});

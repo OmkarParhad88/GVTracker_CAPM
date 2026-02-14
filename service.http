@@ -28,7 +28,7 @@ POST http://localhost:4004/odata/v4/gv-tracker/GVHeaderSet
 Content-Type: application/json
 
 {
-    "gv_no": 10000008,
+    "gv_no": 10000009,
     "total_gift_amout": 2000.00,
     "campaign": "VALENTINE SALES 2025",
     "comment": "",
@@ -38,7 +38,7 @@ Content-Type: application/json
     "gr_type_code":"CI",
     "bills": [
         {
-          "no": "Bjjuu8",
+          "no": "Bjjuu9",
           "sr_no": 1,
           "amount": 2000,
           "doc_name": "testr.pdf",
