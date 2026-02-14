@@ -17,15 +17,18 @@ Content-Type: application/json
 
 ###
 GET http://localhost:4004/odata/v4/gv-tracker/GiftVoucherSet?$expand= assignGiftVouchers
+
 ###
-GET http://localhost:4004/odata/v4/gv-tracker/GVHeaderSet?$expand=customer, bills, giftVouchers,campaign
+GET http://localhost:4004/odata/v4/gv-tracker/GVHeaderSet?$expand=customer,bills,assignGiftVouchers,campaign
+###
+GET http://localhost:4004/odata/v4/gv-tracker/GVHeaderSet?$filter=customer/email eq 'omkarparhad88pro@gmail.com'
 
 ### Create a New Gift Voucher
 POST http://localhost:4004/odata/v4/gv-tracker/GVHeaderSet
 Content-Type: application/json
 
 {
-    "gv_no": 10000004,
+    "gv_no": 10000008,
     "total_gift_amout": 2000.00,
     "campaign": "VALENTINE SALES 2025",
     "comment": "",
@@ -35,7 +38,7 @@ Content-Type: application/json
     "gr_type_code":"CI",
     "bills": [
         {
-          "no": "Bjjuu3",
+          "no": "Bjjuu8",
           "sr_no": 1,
           "amount": 2000,
           "doc_name": "testr.pdf",
@@ -43,11 +46,11 @@ Content-Type: application/json
           "mime_type_code": "PDF"
         }
     ],
-    "giftVouchers": [
+    "assignGiftVouchers": [
         {
          "quantity": 1, 
          "total_amount" : 2000.00,
-         "giftVoucher_coupon" : "080126UNL5H016"
+         "giftVoucher_ID" : "5e0d360f-69b9-4029-9ef2-a5d0be9980bd"
         }
     ]
 }

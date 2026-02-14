@@ -1,6 +1,6 @@
 using {GV_tracker as my} from '../db/schema.cds';
 
-using {Countries} from '@sap/cds/common';
+// using {Countries} from '@sap/cds/common';
 
 service GV_trackerService {
     @cds.redirection.target
@@ -29,7 +29,7 @@ service GV_trackerService {
     @readonly
     entity GVRTypes        as projection on my.GVRTypes;
 
-    @cds.redirection.target
+    @cds.redirection.targetj
     @readonly
     entity GiftTypes       as projection on my.GiftTypes;
 
